@@ -21,7 +21,11 @@ class BackstopService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
   }
   @Transactional
   fun addToBackstop(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> =
-    records.map { createBackstopForPerson(it) }.sequence()
+    records
+      .filter { it.status == AttendanceStatus.MEMBER }
+      .map { createBackstopForPerson(it) }
+      .sequence()
+      .map { records }
 
   private fun createBackstopForPerson(record: AttendanceRecord): TryEither<AttendanceRecord> =
     Either.catch {
