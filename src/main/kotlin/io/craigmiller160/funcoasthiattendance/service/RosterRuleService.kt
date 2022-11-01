@@ -14,7 +14,7 @@ class RosterRuleService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
     private const val INSERT_RULE =
       """
             INSERT INTO roster_rules (start_date, end_present, num_meetings_become_member, out_of_meetings_become_member, num_meetings_stay_member, out_of_meetings_stay_member)
-            VALUES ('2022-01-01'::date', true, 2, 3, 1, 3)
+            VALUES ('2022-01-01'::date, true, 2, 3, 1, 3)
         """
   }
 
