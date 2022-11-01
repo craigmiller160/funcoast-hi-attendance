@@ -21,14 +21,15 @@ class FuncoastApiService(private val webClient: WebClient, private val oAuth2Val
       .flatMap { auth ->
         webClient
           .post()
-          .uri("/funcoast-hi/roster/calculate")
-          .header("Authorization", auth.accessToken)
+          .uri("/funcoast-hi/api/roster/calculate")
+          .header("Authorization", "Bearer ${auth.accessToken}")
           .retrieve()
           .onStatus(this::isErrorStatus, this::handleError)
           .bodyToMono(String::class.java)
           .map { Either.Right(it) as TryEither<String> } // IDE is wrong, casting is needed here
           .onErrorResume { Mono.just(Either.Left(it)) }
-          .block()!!
+          .block()
+          ?: Either.Right("")
       }
       .map { Unit }
   }
