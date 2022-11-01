@@ -1,5 +1,5 @@
 spring:
   datasource:
-    username: postgres_root
+    username: ${POSTGRES_ROOT_USER}
     password: ${POSTGRES_ROOT_PASSWORD}
     url: jdbc:postgresql://craigmiller160.ddns.net:30019/funcoast_hi_prod
