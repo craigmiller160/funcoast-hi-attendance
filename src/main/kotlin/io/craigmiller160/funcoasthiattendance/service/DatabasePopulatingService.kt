@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional
 class DatabasePopulatingService(
   private val peopleService: PeopleService,
   private val backstopService: BackstopService,
+  private val meetingAttendanceService: MeetingAttendanceService,
   private val rosterRuleService: RosterRuleService
 ) {
   @Transactional
@@ -17,5 +18,6 @@ class DatabasePopulatingService(
     peopleService
       .createPeople(records)
       .flatMap { backstopService.addToBackstop(it) }
+      .flatMap { meetingAttendanceService.addFirstMeeting(it) }
       .flatMap { rosterRuleService.createRules(it) }
 }

@@ -15,6 +15,6 @@ class MeetingAttendanceService(private val jdbcTemplate: NamedParameterJdbcTempl
             VALUES (:personId, :meetingDate)
         """
   }
-  fun addLastMeeting(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> =
+  fun addFirstMeeting(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> =
     Either.Right(records)
 }
