@@ -31,5 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
-#*.csv
+*.csv
 oauth2.yml
