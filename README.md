@@ -20,6 +20,15 @@ oauth2:
     password: ####
 ```
 
+Lastly, in the `application.yml`, update important information for the program to run:
+
+```yaml
+funcoast:
+  attendance:
+    # yyyy-MM-dd
+    first-meeting-date: #####
+```
+
 ## What It Does
 
 This application will populate the bare minimum required to get the application up and running again.
