@@ -9,7 +9,7 @@ spring:
 
 funcoast:
   attendance:
-    first-meeting-date: 2022-10-08
+    first-meeting-date: 2022-10-01
 
 logging:
   level:
