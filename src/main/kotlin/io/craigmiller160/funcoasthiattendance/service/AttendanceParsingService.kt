@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 @Service
 class AttendanceParsingService(private val resourceLoader: ResourceLoader) {
   companion object {
-    private const val FILE = "attendance.csv"
+    private const val FILE = "classpath:attendance.csv"
   }
   fun parse(): TryEither<List<AttendanceRecord>> =
     Either.catch { CSVReader(resourceLoader.getResource(FILE).inputStream.reader()).readAll() }
