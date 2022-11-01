@@ -2,6 +2,7 @@ package io.craigmiller160.funcoasthiattendance.service
 
 import arrow.core.Either
 import io.craigmiller160.funcoasthiattendance.function.TryEither
+import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
@@ -14,8 +15,11 @@ class ResetService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
     private const val WIPE_BACKSTOP = "DELETE FROM backstop"
     private const val WIPE_PEOPLE = "DELETE FROM people"
   }
+
+  private val log = LoggerFactory.getLogger(javaClass)
   fun resetAllData(): TryEither<Unit> =
     Either.catch {
+      log.debug("Resetting all data")
       jdbcTemplate.update(WIPE_ROSTER_RULES, MapSqlParameterSource())
       jdbcTemplate.update(WIPE_MEETING_ATTENDANCE, MapSqlParameterSource())
       jdbcTemplate.update(WIPE_BACKSTOP, MapSqlParameterSource())

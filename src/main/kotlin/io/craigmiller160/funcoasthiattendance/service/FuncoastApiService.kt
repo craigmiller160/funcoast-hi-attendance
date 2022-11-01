@@ -7,6 +7,7 @@ import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.AuthenticationResponse
 import io.craigmiller160.funcoasthiattendance.model.OAuth2Values
 import java.util.Base64
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.reactive.function.BodyInserters
@@ -16,7 +17,9 @@ import reactor.core.publisher.Mono
 
 @Service
 class FuncoastApiService(private val webClient: WebClient, private val oAuth2Values: OAuth2Values) {
+  private val log = LoggerFactory.getLogger(javaClass)
   fun calculateRoster(): TryEither<Unit> {
+    log.debug("Calling API to calculate new roster")
     return authenticate()
       .flatMap { auth ->
         webClient

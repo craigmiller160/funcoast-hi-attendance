@@ -15,6 +15,7 @@ class AttendanceBuildingService(
   private val log = LoggerFactory.getLogger(javaClass)
   @Transactional
   fun build() {
+    log.debug("Building attendance data")
     resetService
       .resetAllData()
       .flatMap { attendanceParsingService.parse() }

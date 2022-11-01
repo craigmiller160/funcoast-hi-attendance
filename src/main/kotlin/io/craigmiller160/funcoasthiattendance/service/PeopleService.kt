@@ -4,6 +4,7 @@ import arrow.core.Either
 import arrow.core.sequence
 import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.AttendanceRecord
+import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
@@ -21,9 +22,12 @@ class PeopleService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
       SELECT currval('people_person_id_seq')
     """
   }
+  private val log = LoggerFactory.getLogger(javaClass)
   @Transactional
-  fun createPeople(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> =
-    records.map { createPerson(it) }.sequence()
+  fun createPeople(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> {
+    log.debug("Creating people records")
+    return records.map { createPerson(it) }.sequence()
+  }
 
   private fun createPerson(record: AttendanceRecord): TryEither<AttendanceRecord> =
     Either.catch {

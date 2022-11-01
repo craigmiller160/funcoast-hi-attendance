@@ -5,6 +5,7 @@ import arrow.core.sequence
 import io.craigmiller160.funcoasthiattendance.config.FuncoastAttendanceConfig
 import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.AttendanceRecord
+import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
@@ -21,8 +22,11 @@ class MeetingAttendanceService(
             VALUES (:personId, :meetingDate)
         """
   }
-  fun addFirstMeeting(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> =
-    records.map { addFirstMeetingToRecord(it) }.sequence()
+  private val log = LoggerFactory.getLogger(javaClass)
+  fun addFirstMeeting(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> {
+    log.debug("Adding first meeting entries for: ${attendanceConfig.firstMeetingDate}")
+    return records.map { addFirstMeetingToRecord(it) }.sequence()
+  }
 
   private fun addFirstMeetingToRecord(record: AttendanceRecord): TryEither<AttendanceRecord> =
     Either.catch {

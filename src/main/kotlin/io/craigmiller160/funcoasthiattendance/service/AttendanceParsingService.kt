@@ -5,6 +5,7 @@ import com.opencsv.CSVReader
 import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.AttendanceRecord
 import io.craigmiller160.funcoasthiattendance.model.AttendanceStatus
+import org.slf4j.LoggerFactory
 import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
 
@@ -13,8 +14,12 @@ class AttendanceParsingService(private val resourceLoader: ResourceLoader) {
   companion object {
     private const val FILE = "classpath:attendance.csv"
   }
-  fun parse(): TryEither<List<AttendanceRecord>> =
-    Either.catch { CSVReader(resourceLoader.getResource(FILE).inputStream.reader()).readAll() }
+  private val log = LoggerFactory.getLogger(javaClass)
+  fun parse(): TryEither<List<AttendanceRecord>> {
+    log.debug("Parsing CSV")
+    return Either.catch {
+        CSVReader(resourceLoader.getResource(FILE).inputStream.reader()).readAll()
+      }
       .map { records ->
         records.drop(1).map {
           AttendanceRecord(
@@ -25,4 +30,5 @@ class AttendanceParsingService(private val resourceLoader: ResourceLoader) {
             panel = it[4])
         }
       }
+  }
 }
