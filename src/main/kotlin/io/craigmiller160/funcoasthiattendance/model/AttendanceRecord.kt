@@ -5,5 +5,6 @@ data class AttendanceRecord(
   val phone: String,
   val email: String,
   val status: AttendanceStatus,
-  val panel: String
+  val panel: String,
+  val dbId: Long = 0
 )
