@@ -51,6 +51,6 @@ class FuncoastApiService(private val webClient: WebClient, private val oAuth2Val
 
   private fun createAuthenticateBasicAuthHeader(): String {
     val raw = "${oAuth2Values.clientKey}:${oAuth2Values.clientSecret}"
-    return Base64.getEncoder().encodeToString(raw.toByteArray())
+    return "Basic ${Base64.getEncoder().encodeToString(raw.toByteArray())}"
   }
 }
