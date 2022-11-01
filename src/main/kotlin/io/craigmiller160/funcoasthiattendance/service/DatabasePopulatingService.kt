@@ -1,7 +1,6 @@
 package io.craigmiller160.funcoasthiattendance.service
 
 import arrow.core.flatMap
-import arrow.core.sequence
 import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.AttendanceRecord
 import org.springframework.stereotype.Service
@@ -14,7 +13,5 @@ class DatabasePopulatingService(
 ) {
   @Transactional
   fun populate(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> =
-    peopleService.createPeople(records).flatMap { recs ->
-      recs.map { backstopService.addToBackstop(it) }.sequence()
-    }
+    peopleService.createPeople(records).flatMap { backstopService.addToBackstop(it) }
 }

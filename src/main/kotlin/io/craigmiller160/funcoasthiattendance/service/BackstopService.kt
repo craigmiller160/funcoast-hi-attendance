@@ -7,5 +7,6 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class BackstopService {
-  @Transactional fun addToBackstop(record: AttendanceRecord): TryEither<AttendanceRecord> = TODO()
+  @Transactional
+  fun addToBackstop(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> = TODO()
 }
