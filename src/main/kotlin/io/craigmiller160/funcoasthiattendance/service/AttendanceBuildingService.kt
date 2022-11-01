@@ -1,7 +1,6 @@
 package io.craigmiller160.funcoasthiattendance.service
 
 import arrow.core.flatMap
-import io.craigmiller160.funcoasthiattendance.model.AttendanceRecord
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -10,7 +9,8 @@ import org.springframework.transaction.annotation.Transactional
 class AttendanceBuildingService(
   private val resetService: ResetService,
   private val attendanceParsingService: AttendanceParsingService,
-  private val databasePopulatingService: DatabasePopulatingService
+  private val databasePopulatingService: DatabasePopulatingService,
+  private val funcoastApiService: FuncoastApiService
 ) {
   private val log = LoggerFactory.getLogger(javaClass)
   @Transactional
@@ -19,6 +19,7 @@ class AttendanceBuildingService(
       .resetAllData()
       .flatMap { attendanceParsingService.parse() }
       .flatMap { databasePopulatingService.populate(it) }
+      .flatMap { funcoastApiService.calculateRoster() }
       .fold(this::logException, this::logSuccess)
   }
 
@@ -26,7 +27,7 @@ class AttendanceBuildingService(
     log.error("Error building attendance data", ex)
   }
 
-  private fun logSuccess(records: List<AttendanceRecord>) {
+  private fun logSuccess(empty: Unit) {
     log.info("Successfully built attendance data")
   }
 }
