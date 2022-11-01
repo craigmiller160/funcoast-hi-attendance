@@ -14,14 +14,9 @@ class AttendanceParsingService(private val resourceLoader: ResourceLoader) {
     private const val FILE = "attendance.csv"
   }
   fun parse(): TryEither<Sequence<AttendanceRecord>> =
-    Either.catch {
-        CSVReader(resourceLoader.getResource(FILE).inputStream.reader())
-          .readAll()
-          .asSequence()
-          .drop(1)
-      }
+    Either.catch { CSVReader(resourceLoader.getResource(FILE).inputStream.reader()).readAll() }
       .map { records ->
-        records.map {
+        records.asSequence().drop(1).map {
           AttendanceRecord(
             name = it[0],
             phone = it[1],
