@@ -3,6 +3,7 @@ package io.craigmiller160.funcoasthiattendance.service
 import arrow.core.flatMap
 import arrow.core.sequence
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AttendanceBuildingService(
@@ -11,6 +12,7 @@ class AttendanceBuildingService(
   private val personService: PersonService,
   private val backstopService: BackstopService
 ) {
+  @Transactional
   fun build() {
     resetService
       .resetAllData()
