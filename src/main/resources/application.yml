@@ -7,3 +7,7 @@ spring:
 funcoast:
   attendance:
     first-meeting-date: 2022-10-08
+
+logging:
+  level:
+    io.craigmiller160.funcoasthiattendance: DEBUG
