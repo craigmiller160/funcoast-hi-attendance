@@ -1,5 +1,6 @@
 package io.craigmiller160.funcoasthiattendance
 
+import io.craigmiller160.funcoasthiattendance.service.AttendanceBuildingService
 import javax.annotation.PostConstruct
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -8,8 +9,14 @@ import org.springframework.scheduling.annotation.EnableAsync
 
 @SpringBootApplication
 @EnableAsync
-class FuncoastHiAttendanceApplication {
-  @Async @PostConstruct fun run() {}
+class FuncoastHiAttendanceApplication(
+  private val attendanceBuildingService: AttendanceBuildingService
+) {
+  @Async
+  @PostConstruct
+  fun run() {
+    attendanceBuildingService.build()
+  }
 }
 
 fun main(args: Array<String>) {
