@@ -15,7 +15,7 @@ class BackstopService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
   companion object {
     private const val INSERT_BACKSTOP =
       """
-      INSERT INTO backstop (person_id, member, returning)
+      INSERT INTO backstop (person_id, member, "returning")
       VALUES (:personId, :member, :returning)
     """
   }
