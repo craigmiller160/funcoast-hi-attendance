@@ -3,7 +3,6 @@ package io.craigmiller160.funcoasthiattendance.service
 import arrow.core.flatMap
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class AttendanceBuildingService(
@@ -13,7 +12,7 @@ class AttendanceBuildingService(
   private val funcoastApiService: FuncoastApiService
 ) {
   private val log = LoggerFactory.getLogger(javaClass)
-  @Transactional
+
   fun build() {
     log.debug("Building attendance data")
     resetService
