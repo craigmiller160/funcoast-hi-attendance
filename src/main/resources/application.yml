@@ -3,6 +3,10 @@ spring:
     username: ${POSTGRES_ROOT_USER}
     password: ${POSTGRES_ROOT_PASSWORD}
     url: jdbc:postgresql://craigmiller160.ddns.net:30019/funcoast_hi_prod
+    hikari:
+      connection-timeout: 5000
+      idle-timeout: 5000
+      max-lifetime: 5000
 
 funcoast:
   attendance:
