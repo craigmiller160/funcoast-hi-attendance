@@ -25,7 +25,7 @@ Lastly, in the `application.yml`, update important information for the program t
 ```yaml
 funcoast:
   attendance:
-    # yyyy-MM-dd
+    # yyyy-MM-dd, must be first day of month for calculations to work
     first-meeting-date: #####
 ```
 
