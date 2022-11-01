@@ -11,3 +11,4 @@ funcoast:
 logging:
   level:
     io.craigmiller160.funcoasthiattendance: DEBUG
+    org.springframework.jdbc.core: TRACE
