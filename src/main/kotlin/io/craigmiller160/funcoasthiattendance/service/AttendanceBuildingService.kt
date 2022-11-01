@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional
 class AttendanceBuildingService(
   private val resetService: ResetService,
   private val attendanceParsingService: AttendanceParsingService,
-  private val personService: PersonService,
-  private val backstopService: BackstopService,
   private val databasePopulatingService: DatabasePopulatingService
 ) {
   @Transactional

@@ -9,13 +9,12 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class DatabasePopulatingService(
-  private val personService: PersonService,
+  private val peopleService: PeopleService,
   private val backstopService: BackstopService
 ) {
   @Transactional
   fun populate(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> =
-    records
-      .map { personService.createPerson(it) }
-      .sequence()
-      .flatMap { records -> records.map { backstopService.addToBackstop(it) }.sequence() }
+    peopleService.createPeople(records).flatMap { recs ->
+      recs.map { backstopService.addToBackstop(it) }.sequence()
+    }
 }
