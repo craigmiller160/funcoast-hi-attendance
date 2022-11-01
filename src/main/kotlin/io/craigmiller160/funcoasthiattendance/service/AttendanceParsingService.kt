@@ -13,10 +13,10 @@ class AttendanceParsingService(private val resourceLoader: ResourceLoader) {
   companion object {
     private const val FILE = "attendance.csv"
   }
-  fun parse(): TryEither<Sequence<AttendanceRecord>> =
+  fun parse(): TryEither<List<AttendanceRecord>> =
     Either.catch { CSVReader(resourceLoader.getResource(FILE).inputStream.reader()).readAll() }
       .map { records ->
-        records.asSequence().drop(1).map {
+        records.drop(1).map {
           AttendanceRecord(
             name = it[0],
             phone = it[1],
