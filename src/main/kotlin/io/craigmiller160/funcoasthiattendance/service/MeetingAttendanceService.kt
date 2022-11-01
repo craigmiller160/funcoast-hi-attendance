@@ -1,9 +1,11 @@
 package io.craigmiller160.funcoasthiattendance.service
 
 import arrow.core.Either
+import arrow.core.sequence
 import io.craigmiller160.funcoasthiattendance.config.FuncoastAttendanceConfig
 import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.AttendanceRecord
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
 
@@ -20,5 +22,15 @@ class MeetingAttendanceService(
         """
   }
   fun addFirstMeeting(records: List<AttendanceRecord>): TryEither<List<AttendanceRecord>> =
-    Either.Right(records)
+    records.map { addFirstMeetingToRecord(it) }.sequence()
+
+  private fun addFirstMeetingToRecord(record: AttendanceRecord): TryEither<AttendanceRecord> =
+    Either.catch {
+      val params =
+        MapSqlParameterSource()
+          .addValue("personId", record.dbId)
+          .addValue("meetingDate", attendanceConfig.firstMeetingDate)
+      jdbcTemplate.update(INSERT_MEETING, params)
+      record
+    }
 }
