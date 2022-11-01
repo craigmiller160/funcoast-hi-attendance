@@ -19,3 +19,7 @@ oauth2:
     name: ####
     password: ####
 ```
+
+## What It Does
+
+This application will populate the bare minimum required to get the application up and running again.
