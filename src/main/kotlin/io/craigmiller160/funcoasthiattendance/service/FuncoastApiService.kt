@@ -1,6 +1,7 @@
 package io.craigmiller160.funcoasthiattendance.service
 
 import arrow.core.Either
+import arrow.core.flatMap
 import io.craigmiller160.funcoasthiattendance.exception.FuncoastApiException
 import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.AuthenticationResponse
@@ -16,10 +17,20 @@ import reactor.core.publisher.Mono
 @Service
 class FuncoastApiService(private val webClient: WebClient, private val oAuth2Values: OAuth2Values) {
   fun calculateRoster(): TryEither<Unit> {
-    return authenticate().map {
-      println(it)
-      Unit
-    }
+    return authenticate()
+      .flatMap { auth ->
+        webClient
+          .post()
+          .uri("/funcoast-hi/roster/calculate")
+          .header("Authorization", auth.accessToken)
+          .retrieve()
+          .onStatus(this::isErrorStatus, this::handleError)
+          .bodyToMono(String::class.java)
+          .map { Either.Right(it) as TryEither<String> } // IDE is wrong, casting is needed here
+          .onErrorResume { Mono.just(Either.Left(it)) }
+          .block()!!
+      }
+      .map { Unit }
   }
 
   private fun authenticate(): TryEither<AuthenticationResponse> {
