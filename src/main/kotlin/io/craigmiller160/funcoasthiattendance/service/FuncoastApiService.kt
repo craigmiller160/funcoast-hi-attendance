@@ -23,20 +23,22 @@ class FuncoastApiService(private val webClient: WebClient, private val oAuth2Val
   }
 
   private fun authenticate(): TryEither<AuthenticationResponse> {
-    val result =
-      webClient
-        .post()
-        .uri("/oauth2/oauth/token")
-        .header("Authorization", createAuthenticateBasicAuthHeader())
-        .body(
-          BodyInserters.fromFormData("grant_type", "password")
-            .with("username", oAuth2Values.userName)
-            .with("password", oAuth2Values.password))
-        .retrieve()
-        .onStatus(this::isErrorStatus, this::handleError)
-        .bodyToMono(AuthenticationResponse::class.java)
-        .block()!!
-    return Either.Right(result) // TODO clean this up a lot
+    return webClient
+      .post()
+      .uri("/oauth2/oauth/token")
+      .header("Authorization", createAuthenticateBasicAuthHeader())
+      .body(
+        BodyInserters.fromFormData("grant_type", "password")
+          .with("username", oAuth2Values.userName)
+          .with("password", oAuth2Values.password))
+      .retrieve()
+      .onStatus(this::isErrorStatus, this::handleError)
+      .bodyToMono(AuthenticationResponse::class.java)
+      .map {
+        Either.Right(it) as TryEither<AuthenticationResponse>
+      } // IDE is wrong, casting is needed here
+      .onErrorResume { Mono.just(Either.Left(it)) }
+      .block()!!
   }
 
   private fun isErrorStatus(status: HttpStatus): Boolean =
