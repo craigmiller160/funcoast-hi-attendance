@@ -12,7 +12,10 @@ import org.springframework.web.reactive.function.client.WebClient
 @Service
 class FuncoastApiService(private val webClient: WebClient, private val oAuth2Values: OAuth2Values) {
   fun calculateRoster(): TryEither<Unit> {
-    return authenticate().map { Unit }
+    return authenticate().map {
+      println(it)
+      Unit
+    }
   }
 
   private fun authenticate(): TryEither<AuthenticationResponse> {

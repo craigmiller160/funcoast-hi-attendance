@@ -35,6 +35,7 @@
 		<git.hooks.plugin.version>3.3.0</git.hooks.plugin.version>
 		<spotless.version>2.26.0</spotless.version>
 		<spring.arrow.kt.version>1.0.3</spring.arrow.kt.version>
+		<netty.resolver.macos.version>4.1.84.Final</netty.resolver.macos.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -46,6 +47,12 @@
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
 			<version>${opencsv.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.netty</groupId>
+			<artifactId>netty-resolver-dns-native-macos</artifactId>
+			<version>${netty.resolver.macos.version}</version>
+			<classifier>osx-aarch_64</classifier>
 		</dependency>
 		<dependency>
 			<groupId>io.arrow-kt</groupId>
