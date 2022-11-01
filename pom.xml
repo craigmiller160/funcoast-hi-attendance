@@ -34,8 +34,14 @@
 		<maven.git.hooks.version>1.0.1</maven.git.hooks.version>
 		<git.hooks.plugin.version>3.3.0</git.hooks.plugin.version>
 		<spotless.version>2.26.0</spotless.version>
+		<spring.arrow.kt.version>1.0.3</spring.arrow.kt.version>
 	</properties>
 	<dependencies>
+		<dependency>
+			<groupId>io.github.craigmiller160</groupId>
+			<artifactId>spring-arrow-kt</artifactId>
+			<version>${spring.arrow.kt.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.opencsv</groupId>
 			<artifactId>opencsv</artifactId>
