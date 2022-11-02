@@ -109,7 +109,19 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
     }
 
   fun addPanelMembers(panelsAndAttendance: PanelsAndAttendance): TryEither<PanelsAndAttendance> =
-    TODO()
+    findPanelMembers(panelsAndAttendance)
+      .map { insertPanelMember(it) }
+      .sequence()
+      .map { panelsAndAttendance }
+
+  private fun insertPanelMember(panelMember: PanelMember): TryEither<Unit> =
+    Either.catch {
+      val params =
+        MapSqlParameterSource()
+          .addValue("personId", panelMember.personId)
+          .addValue("panelId", panelMember.panelId)
+      jdbcTemplate.update(INSERT_PANEL, params)
+    }
 
   private fun findPanelMembers(panelsAndAttendance: PanelsAndAttendance): List<PanelMember> =
     panelsAndAttendance.attendance.flatMap(getAllPanelsForAttendance(panelsAndAttendance.panels))
