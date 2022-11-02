@@ -120,7 +120,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
         MapSqlParameterSource()
           .addValue("personId", panelMember.personId)
           .addValue("panelId", panelMember.panelId)
-      jdbcTemplate.update(INSERT_PANEL, params)
+      jdbcTemplate.update(INSERT_PANEL_MEMBER, params)
     }
 
   private fun findPanelMembers(panelsAndAttendance: PanelsAndAttendance): List<PanelMember> =
