@@ -1,8 +1,12 @@
 package io.craigmiller160.funcoasthiattendance.service
 
+import arrow.core.Either
+import arrow.core.sequence
+import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.Day
 import io.craigmiller160.funcoasthiattendance.model.Panel
 import java.time.LocalTime
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
 
@@ -70,4 +74,21 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           time = LocalTime.of(19, 0),
           restrictions = "Women Only"))
   }
+
+  fun createPanels(): TryEither<List<Panel>> = PANELS.map { createPanel(it) }.sequence()
+
+  private fun createPanel(panel: Panel): TryEither<Panel> =
+    Either.catch {
+      val params =
+        MapSqlParameterSource()
+          .addValue("name", panel.name)
+          .addValue("address1", panel.address1)
+          .addValue("address2", panel.address2)
+          .addValue("day", panel.day.number)
+          .addValue("time", panel.time)
+          .addValue("restrictions", panel.restrictions)
+      jdbcTemplate.update(INSERT_PANEL, params)
+      val id = jdbcTemplate.queryForObject(GET_ID, MapSqlParameterSource(), Long::class.java)!!
+      panel.copy(dbId = id)
+    }
 }
