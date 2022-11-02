@@ -5,6 +5,7 @@ import arrow.core.sequence
 import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.Day
 import io.craigmiller160.funcoasthiattendance.model.Panel
+import io.craigmiller160.funcoasthiattendance.model.PanelsAndAttendance
 import java.time.LocalTime
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
@@ -103,4 +104,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
       val id = jdbcTemplate.queryForObject(GET_ID, MapSqlParameterSource(), Long::class.java)!!
       panel.copy(dbId = id)
     }
+
+  fun addPanelMembers(panelsAndAttendance: PanelsAndAttendance): TryEither<PanelsAndAttendance> =
+    TODO()
 }

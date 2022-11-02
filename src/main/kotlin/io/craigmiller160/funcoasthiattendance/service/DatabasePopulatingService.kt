@@ -31,6 +31,7 @@ class DatabasePopulatingService(
           .flatMap { meetingAttendanceService.addFirstMeeting(it) }
           .map { data.copy(attendance = it) }
       }
+      .flatMap { data -> panelService.addPanelMembers(data) }
       .flatMap { data -> rosterRuleService.createRules().map { data } }
   }
 }
