@@ -32,3 +32,7 @@ funcoast:
 ## What It Does
 
 This application will populate the bare minimum required to get the application up and running again.
+
+## Additional Notes
+
+The list of panels is hardcoded in `PanelService`. It also is designed to identify who is a part of what panel based on regex against manually-written panel descriptions.
