@@ -6,6 +6,7 @@ import io.craigmiller160.funcoasthiattendance.function.TryEither
 import io.craigmiller160.funcoasthiattendance.model.Day
 import io.craigmiller160.funcoasthiattendance.model.Panel
 import java.time.LocalTime
+import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.stereotype.Service
@@ -74,8 +75,12 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           time = LocalTime.of(19, 0),
           restrictions = "Women Only"))
   }
+  private val log = LoggerFactory.getLogger(javaClass)
 
-  fun createPanels(): TryEither<List<Panel>> = PANELS.map { createPanel(it) }.sequence()
+  fun createPanels(): TryEither<List<Panel>> {
+    log.debug("Creating panels")
+    return PANELS.map { createPanel(it) }.sequence()
+  }
 
   private fun createPanel(panel: Panel): TryEither<Panel> =
     Either.catch {
