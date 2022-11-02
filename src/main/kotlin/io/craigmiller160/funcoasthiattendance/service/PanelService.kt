@@ -36,7 +36,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           day = Day.TUESDAY,
           time = LocalTime.of(18, 30),
           restrictions = "",
-          memberMatchRegexes = listOf(Regex("River Oaks"))),
+          memberMatchRegexes = listOf(Regex(".*River Oaks.*"))),
         Panel(
           name = "7th Summit",
           address1 = "https://us02web.zoom.us/j/89472266859",
@@ -44,7 +44,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           day = Day.WEDNESDAY,
           time = LocalTime.of(19, 0),
           restrictions = "",
-          memberMatchRegexes = listOf(Regex("7th Summit"))),
+          memberMatchRegexes = listOf(Regex(".*7th Summit.*"))),
         Panel(
           name = "Riverside Recovery",
           address1 = "4004 N Riverside Dr",
@@ -52,7 +52,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           day = Day.WEDNESDAY,
           time = LocalTime.of(19, 0),
           restrictions = "",
-          memberMatchRegexes = listOf(Regex("Riverside"))),
+          memberMatchRegexes = listOf(Regex(".*Riverside.*"))),
         Panel(
           name = "Gracepoint",
           address1 = "2214 E Henry Ave",
@@ -60,7 +60,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           day = Day.WEDNESDAY,
           time = LocalTime.of(19, 30),
           restrictions = "",
-          memberMatchRegexes = listOf(Regex("ACTS"))),
+          memberMatchRegexes = listOf(Regex(".*ACTS.*"))),
         Panel(
           name = "COVE (DACCO) Family",
           address1 = "https://us02web.zoom.us/j/89381226699",
@@ -68,7 +68,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           day = Day.THURSDAY,
           time = LocalTime.of(19, 0),
           restrictions = "Women Only",
-          memberMatchRegexes = listOf(Regex("COVE.*Family"))),
+          memberMatchRegexes = listOf(Regex(".*COVE.*Family.*"))),
         Panel(
           name = "COVE (DACCO) R3",
           address1 = "3107 N 50th St",
@@ -76,7 +76,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           day = Day.FRIDAY,
           time = LocalTime.of(18, 30),
           restrictions = "Men Only",
-          memberMatchRegexes = listOf(Regex("COVE.*Men"))),
+          memberMatchRegexes = listOf(Regex(".*COVE.*Men.*"))),
         Panel(
           name = "COVE (DACCO) R1)",
           address1 = "https://us02web.zoom.us/j/84006618716",
@@ -84,7 +84,7 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           day = Day.FRIDAY,
           time = LocalTime.of(19, 0),
           restrictions = "Women Only",
-          memberMatchRegexes = listOf(Regex("COVE.*R1"))))
+          memberMatchRegexes = listOf(Regex(".*COVE.*R1.*"))))
   }
   private val log = LoggerFactory.getLogger(javaClass)
 
