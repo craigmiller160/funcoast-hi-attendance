@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service
 @Service
 class ResetService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
   companion object {
+    private const val WIPE_PANEL_MEMBERS = "DELETE FROM panel_membership"
+    private const val WIPE_PANELS = "DELETE FROM panels"
     private const val WIPE_MEETING_ATTENDANCE = "DELETE FROM meeting_attendance"
     private const val WIPE_ROSTERS = "DELETE FROM rosters"
     private const val WIPE_ROSTER_RULES = "DELETE FROM roster_rules"
@@ -23,6 +25,8 @@ class ResetService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
       log.debug("Resetting all data")
       jdbcTemplate.update(WIPE_ROSTER_RULES, MapSqlParameterSource())
       jdbcTemplate.update(WIPE_ROSTERS, MapSqlParameterSource())
+      jdbcTemplate.update(WIPE_PANEL_MEMBERS, MapSqlParameterSource())
+      jdbcTemplate.update(WIPE_PANELS, MapSqlParameterSource())
       jdbcTemplate.update(WIPE_MEETING_ATTENDANCE, MapSqlParameterSource())
       jdbcTemplate.update(WIPE_BACKSTOP, MapSqlParameterSource())
       jdbcTemplate.update(WIPE_PEOPLE, MapSqlParameterSource())
