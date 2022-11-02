@@ -26,10 +26,10 @@ class DatabasePopulatingService(
         peopleService.createPeople(records).map { PanelsAndAttendance(it, panels) }
       }
       .flatMap { data ->
-        backstopService.addToBackstop(data.attendance).map { data.copy(attendance = it) }
-      }
-      .flatMap { data ->
-        meetingAttendanceService.addFirstMeeting(data.attendance).map { data.copy(attendance = it) }
+        backstopService
+          .addToBackstop(data.attendance)
+          .flatMap { meetingAttendanceService.addFirstMeeting(it) }
+          .map { data.copy(attendance = it) }
       }
       .flatMap { data -> rosterRuleService.createRules().map { data } }
   }
