@@ -3,9 +3,7 @@ package io.craigmiller160.funcoasthiattendance.service
 import arrow.core.Either
 import arrow.core.sequence
 import io.craigmiller160.funcoasthiattendance.function.TryEither
-import io.craigmiller160.funcoasthiattendance.model.Day
-import io.craigmiller160.funcoasthiattendance.model.Panel
-import io.craigmiller160.funcoasthiattendance.model.PanelsAndAttendance
+import io.craigmiller160.funcoasthiattendance.model.*
 import java.time.LocalTime
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource
@@ -23,6 +21,11 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
     private const val GET_ID = """
           SELECT currval('panels_panel_id_seq')
         """
+    private const val INSERT_PANEL_MEMBER =
+      """
+        INSERT INTO panel_membership (panel_id, person_id)
+        VALUES (:panelId, :personId)
+    """
 
     private val PANELS =
       listOf(
@@ -107,4 +110,15 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
 
   fun addPanelMembers(panelsAndAttendance: PanelsAndAttendance): TryEither<PanelsAndAttendance> =
     TODO()
+
+  private fun findPanelMembers(panelsAndAttendance: PanelsAndAttendance): List<PanelMember> =
+    panelsAndAttendance.attendance.flatMap(getAllPanelsForAttendance(panelsAndAttendance.panels))
+
+  private fun getAllPanelsForAttendance(
+    panels: List<Panel>
+  ): (AttendanceRecord) -> List<PanelMember> = { attendance ->
+    panels
+      .filter { panel -> panel.memberMatchRegexes.any { regex -> regex.matches(attendance.panel) } }
+      .map { PanelMember(attendance.dbId, it.dbId) }
+  }
 }
