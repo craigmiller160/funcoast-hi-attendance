@@ -31,49 +31,56 @@ class PanelService(private val jdbcTemplate: NamedParameterJdbcTemplate) {
           address2 = "Riverview, FL 33569",
           day = Day.TUESDAY,
           time = LocalTime.of(18, 30),
-          restrictions = ""),
+          restrictions = "",
+          memberMatchRegexes = listOf(Regex("River Oaks"))),
         Panel(
           name = "7th Summit",
           address1 = "https://us02web.zoom.us/j/89472266859",
           address2 = "Password: 022512",
           day = Day.WEDNESDAY,
           time = LocalTime.of(19, 0),
-          restrictions = ""),
+          restrictions = "",
+          memberMatchRegexes = listOf(Regex("7th Summit"))),
         Panel(
           name = "Riverside Recovery",
           address1 = "4004 N Riverside Dr",
           address2 = "Tampa, FL 33603",
           day = Day.WEDNESDAY,
           time = LocalTime.of(19, 0),
-          restrictions = ""),
+          restrictions = "",
+          memberMatchRegexes = listOf(Regex("Riverside"))),
         Panel(
           name = "Gracepoint",
           address1 = "2214 E Henry Ave",
           address2 = "Tampa, FL 33610",
           day = Day.WEDNESDAY,
           time = LocalTime.of(19, 30),
-          restrictions = ""),
+          restrictions = "",
+          memberMatchRegexes = listOf(Regex("ACTS"))),
         Panel(
           name = "COVE (DACCO) Family",
           address1 = "https://us02web.zoom.us/j/89381226699",
           address2 = "Password: 806522",
           day = Day.THURSDAY,
           time = LocalTime.of(19, 0),
-          restrictions = "Women Only"),
+          restrictions = "Women Only",
+          memberMatchRegexes = listOf(Regex("COVE.*Family"))),
         Panel(
           name = "COVE (DACCO) R3",
           address1 = "3107 N 50th St",
           address2 = "Tampa, FL 33619",
           day = Day.FRIDAY,
           time = LocalTime.of(18, 30),
-          restrictions = "Men Only"),
+          restrictions = "Men Only",
+          memberMatchRegexes = listOf(Regex("COVE.*Men"))),
         Panel(
           name = "COVE (DACCO) R1)",
           address1 = "https://us02web.zoom.us/j/84006618716",
           address2 = "Password: 076306",
           day = Day.FRIDAY,
           time = LocalTime.of(19, 0),
-          restrictions = "Women Only"))
+          restrictions = "Women Only",
+          memberMatchRegexes = listOf(Regex("COVE.*R1"))))
   }
   private val log = LoggerFactory.getLogger(javaClass)
 

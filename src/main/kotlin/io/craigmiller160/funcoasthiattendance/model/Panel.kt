@@ -9,5 +9,6 @@ data class Panel(
   val day: Day,
   val time: LocalTime,
   val restrictions: String,
+  val memberMatchRegexes: List<Regex>,
   val dbId: Long = 0
 )
